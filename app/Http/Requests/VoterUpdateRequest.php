@@ -13,9 +13,12 @@ class VoterUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
+        $voter = $this->route('voter');
+        $userId = \App\Models\Voter::find($voter)?->user_id;
+
         return [
             'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:users,email,' . $this->route('voter'),
+            'email' => 'required|email|max:255|unique:users,email,' . $userId,
             'password' => 'nullable|string|min:8',
         ];
     }
